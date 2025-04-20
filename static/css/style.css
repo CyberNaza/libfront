@@ -2,16 +2,34 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px 20px 40px; /* Reduced top padding to account for auth buttons */
     background-color: #f0f2f5;
     color: #333;
 }
 h1 {
     color: #1a73e8;
     font-size: 2.5em;
-    margin-bottom: 30px;
+    margin: 20px 0 30px; /* Adjusted margin for spacing */
     text-align: center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+.auth-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.auth-container button {
+    padding: 8px 16px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.auth-container button:hover {
+    background-color: #1557b0;
 }
 .search-container {
     display: flex;
@@ -121,4 +139,58 @@ button:hover {
     color: #555;
     font-style: italic;
     margin-top: 20px;
+}
+
+
+.auth-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 500px;
+    margin: 40px auto;
+}
+
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 20px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+
+.form-container input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-container button:hover {
+    background-color: #1557b0;
 }

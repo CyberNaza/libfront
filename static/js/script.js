@@ -71,7 +71,6 @@ async function fetchBooks(page = 1, search = '') {
                 ${imageHtml}
                 <div class="book-details">
                     <h3>${book.name || 'No title'}</h3>
-                    <p>ID: ${book.id || 'N/A'}</p>
                     <p>Created: ${book.created_at || 'N/A'}</p>
                     <p>Updated: ${book.updated_at || 'N/A'}</p>
                     ${pdfHtml}
@@ -120,6 +119,17 @@ function searchBooks() {
     currentPage = 1;
     console.log('Searching for:', currentSearch);
     fetchBooks(currentPage, currentSearch);
+}
+
+// Auth handlers (placeholders)
+function handleLogin() {
+    alert('Login clicked - authentication not implemented yet');
+    console.log('Login button clicked');
+}
+
+function handleSignUp() {
+    alert('Sign Up clicked - authentication not implemented yet');
+    console.log('Sign Up button clicked');
 }
 
 // Initial fetch
