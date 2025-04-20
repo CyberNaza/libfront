@@ -8,7 +8,12 @@
 </head>
 <body>
     <h1>Books Library</h1>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search books (e.g., python)">
+        <button onclick="searchBooks()">Search</button>
+    </div>
     <div id="books-list"><div class="loading">Loading books...</div></div>
+    <div id="pagination" class="pagination"></div>
     <div id="error" class="error"></div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
