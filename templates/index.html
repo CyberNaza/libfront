@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="auth-container">
-        <button onclick="window.location.href='/login'">Login</button>
-        <button onclick="window.location.href='/signup'">Sign Up</button>
+    <div class="auth-section">
+        <div id="auth-buttons">
+            <button onclick="window.location.href='/login'">Login</button>
+            <button onclick="window.location.href='/signup'">Sign Up</button>
+        </div>
+        <div id="user-info" style="display: none;"></div>
     </div>
     
     <h1>N Library</h1>
