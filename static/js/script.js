@@ -57,7 +57,7 @@ async function fetchBooks(page = 1, search = '') {
             bookDiv.className = 'book-item';
             
             // Handle URLs (relative or full)
-            const baseUrl = 'http://192.168.100.63';
+            const baseUrl = 'http://192.168.100.63:8000';
             const pdfUrl = book.pdf ? (book.pdf.startsWith('http') ? book.pdf : `${baseUrl}${book.pdf}`) : null;
             const imageUrl = book.first_page_image ? (book.first_page_image.startsWith('http') ? book.first_page_image : `${baseUrl}${book.first_page_image}`) : null;
 
@@ -135,3 +135,4 @@ function handleSignUp() {
 // Initial fetch
 console.log('Starting initial fetch');
 fetchBooks(currentPage, currentSearch);
+

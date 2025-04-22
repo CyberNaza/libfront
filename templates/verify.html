@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Code</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+  <h1>Verify Your Email</h1>
+
+  <div class="auth-forms">
+    <div class="form-container" id="verify-form">
+      <h2>Enter Verification Code</h2>
+      <form id="verifyForm">
+        <input type="email" id="email" placeholder="Email" readonly required />
+        <input type="text" id="code" placeholder="6-Digit Code" maxlength="6" pattern="\d{6}" required />
+        <button type="submit"><span>Verify</span></button>
+      </form>
+      <p id="resend-container">
+        Didn't receive a code? <a href="#" id="resend-link">Resend code</a>
+      </p>
+    </div>
+  </div>
+  <div id="response-message"></div>
+
+  <script src="{{ url_for('static', filename='js/verify.js') }}"></script>
+</body>
+</html>
