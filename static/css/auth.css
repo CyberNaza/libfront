@@ -102,5 +102,45 @@ h1 {
     text-align: center;
 }
 
+.form-container p {
+    text-align: center;
+    margin-top: 15px;
+}
 
+.form-container p a {
+    color: #1a73e8;
+    text-decoration: none;
+    margin: 0 5px;
+}
 
+.form-container p a:hover {
+    text-decoration: underline;
+}
+
+#username {
+    color: #1a73e8;
+    font-weight: bold;
+}
+
+/* ===============================
+   ✅ Mobile Responsiveness
+   =============================== */
+@media (max-width: 600px) {
+    body {
+        padding: 10px 10px 30px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-container input,
+    .form-container button {
+        font-size: 1em;
+        padding: 10px;
+    }
+}

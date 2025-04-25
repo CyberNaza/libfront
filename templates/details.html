@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details - N Library</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div id="auth-buttons">
+      <button onclick="window.location.href='/login'">Login</button>
+      <button onclick="window.location.href='/signup'">Sign Up</button>
+    </div>
+    <div id="user-info" style="display: none;"></div>
+  </div>
+
+  <h1>Book Details</h1>
+
+  <div id="book-details"></div>
+
+  <div id="error" class="error"></div>
+
+  <div id="likes-section">
+    <h2>Likes</h2>
+    <div id="likes-count"></div>
+    <button id="like-button" style="display: none;" onclick="likeBook()">Like</button>
+  </div>
+
+  <div id="comments-section">
+    <h2>Comments</h2>
+    <div id="comment-form" style="display: none;">
+      <textarea id="comment-input" placeholder="Write your comment..."></textarea>
+      <button onclick="postComment()">Submit Comment</button>
+    </div>
+    <div id="comments-list"></div>
+  </div>
+
+  <script src="/static/js/details.js"></script>
+</body>
+</html>
