@@ -1,6 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("details.js loaded");
 
+  // Function to get CSRF token from cookie
+  function getCsrfToken() {
+    const name = "csrftoken";
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+
   // Function to format relative time
   function getRelativeTime(date) {
     const now = new Date();
@@ -252,8 +265,17 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // Render likes count
-      likesCountDiv.innerHTML = `<p>Likes: ${likes.length}</p>`;
+      // Render likes count and a single Like button
+      likesCountDiv.innerHTML = `
+        <h3>Likes: ${likes.length}</h3>
+        <button id="like-book-button">Like</button>
+      `;
+
+      // Add event listener for the Like button
+      const likeButton = document.getElementById("like-book-button");
+      if (likeButton) {
+        likeButton.addEventListener("click", () => likeBook());
+      }
 
       // Render comments
       renderComments(comments);
@@ -264,9 +286,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Like a book
+  // Like the book
   async function likeBook() {
     const errorDiv = document.getElementById("error");
+    const likeButton = document.getElementById("like-book-button");
+    if (!likeButton) {
+      console.error("Like button not found");
+      return;
+    }
+
+    // Add loading state
+    likeButton.classList.add("loading");
+    likeButton.disabled = true;
+    const originalText = likeButton.textContent;
+
     try {
       const url = `/proxy/books/${bookId}/likes/`;
       console.log('Liking book at URL:', url);
@@ -275,16 +308,21 @@ document.addEventListener("DOMContentLoaded", () => {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
+        "X-CSRFToken": getCsrfToken(),
       };
+
+      const payload = { comment: parseInt(bookId) }; // Send bookId as "comment"
+      console.log("Like payload:", payload);
 
       const response = await fetch(url, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify({}),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.log("Error response text:", errorText);
         if (response.status === 401) {
           console.log("401 Unauthorized, clearing localStorage and redirecting");
           localStorage.removeItem("accessToken");
@@ -302,6 +340,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       errorDiv.innerText = `Error liking book: ${error.message}`;
       console.error("Like book error:", error);
+    } finally {
+      // Remove loading state
+      likeButton.classList.remove("loading");
+      likeButton.disabled = false;
+      likeButton.textContent = originalText;
     }
   }
 
@@ -309,6 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function postComment() {
     const commentInput = document.getElementById("comment-input");
     const errorDiv = document.getElementById("error");
+    const commentButton = document.querySelector("#comment-form button");
     const content = commentInput.value.trim();
 
     if (!content) {
@@ -323,24 +367,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    if (!commentButton) {
+      console.error("Comment button not found");
+      return;
+    }
+
+    // Add loading state
+    commentButton.classList.add("loading");
+    commentButton.disabled = true;
+    const originalText = commentButton.textContent;
+
     try {
-      const url = `/proxy/books/${bookId}/comments/`;
+      const url = "/proxy/comments/create/";
       console.log('Posting comment to URL:', url);
 
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
+        "X-CSRFToken": getCsrfToken(),
       };
 
       const response = await fetch(url, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify({ text: content }),
+        body: JSON.stringify({ book: parseInt(bookId), text: content }),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.log("Error response text:", errorText);
         if (response.status === 401) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
@@ -358,23 +414,21 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       errorDiv.innerText = `Error posting comment: ${error.message}`;
       console.error("Post comment error:", error);
+    } finally {
+      // Remove loading state
+      commentButton.classList.remove("loading");
+      commentButton.disabled = false;
+      commentButton.textContent = originalText;
     }
   }
 
-  // Show comment form and like button for authenticated users
+  // Show comment form for authenticated users
   const commentForm = document.getElementById("comment-form");
-  const likeButton = document.getElementById("like-button");
-  if (accessToken) {
-    if (commentForm) {
-      console.log("Showing comment form");
-      commentForm.style.display = "block";
-    }
-    if (likeButton) {
-      console.log("Showing like button");
-      likeButton.style.display = "block";
-    }
+  if (accessToken && commentForm) {
+    console.log("Showing comment form");
+    commentForm.style.display = "block";
   } else {
-    console.log("Hiding comment form and like button");
+    console.log("Hiding comment form");
   }
 
   // Initialize page

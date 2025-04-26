@@ -1,0 +1,52 @@
+/* Loading animation for buttons */
+button.loading {
+    position: relative;
+    color: transparent !important; /* Hide the original text */
+    background-color: #e0e0e0; /* Light gray background during loading */
+    cursor: not-allowed; /* Indicate the button is disabled */
+}
+
+/* Spinner animation */
+button.loading::after {
+    content: "Loading...";
+    color: #333; /* Dark text for visibility */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Spinner circle */
+button.loading::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateX(-30px); /* Adjust position to left of "Loading..." */
+    width: 16px;
+    height: 16px;
+    border: 2px solid #333;
+    border-top: 2px solid #007bff; /* Blue spinner highlight */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) translateX(-30px) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateX(-30px) rotate(360deg);
+    }
+}
+
+/* Ensure the button maintains its size during loading */
+button {
+    min-width: 80px; /* Prevent button from shrinking */
+    padding: 8px 16px;
+}

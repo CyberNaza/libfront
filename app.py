@@ -99,9 +99,9 @@ def proxy_comments_create():
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}, 500
 
-@app.route("/proxy/books/<int:id>/likes/", methods=["POST"])
-def proxy_book_likes(id):
-    backend_url = f"http://192.168.100.63:8000/library/books/{id}/likes/"
+@app.route("/proxy/likes/create/", methods=["POST"])
+def proxy_likes_create():
+    backend_url = "http://192.168.100.63:8000/library/likes/create/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -111,6 +111,27 @@ def proxy_book_likes(id):
 
     try:
         data = request.get_json()
+        response = requests.post(backend_url, json=data, headers=headers)
+        response.raise_for_status()
+        return response.json(), response.status_code
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}, 500
+
+@app.route("/proxy/books/<int:id>/likes/", methods=["POST"])
+def proxy_book_likes(id):
+    backend_url = "http://192.168.100.63:8000/library/likes/create/"
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    }
+    if "Authorization" in request.headers:
+        headers["Authorization"] = request.headers["Authorization"]
+    if "X-CSRFToken" in request.headers:
+        headers["X-CSRFToken"] = request.headers["X-CSRFToken"]
+
+    try:
+        data = request.get_json()
+        data = {"comment": id};
         response = requests.post(backend_url, json=data, headers=headers)
         response.raise_for_status()
         return response.json(), response.status_code
