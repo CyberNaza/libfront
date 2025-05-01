@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const baseUrl = "http://192.168.100.63:8000";
+      const baseUrl = "http://159.89.108.157:8000";
       data.results.forEach((book) => {
         const imageUrl = book.first_page_image
           ? book.first_page_image.startsWith("http")

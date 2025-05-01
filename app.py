@@ -3,6 +3,8 @@ import requests
 
 app = Flask(__name__)
 
+BACKEND_BASE_URL = "http://159.89.108.157:8000"
+
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
@@ -30,7 +32,7 @@ def details():
 
 @app.route("/proxy/books", methods=["GET"])
 def proxy_books():
-    backend_url = "http://192.168.100.63:8000/library/books/"
+    backend_url = "http://159.89.108.157:8000/library/books/"
     params = request.args.to_dict()
     headers = {
         "Accept": "application/json",
@@ -48,7 +50,7 @@ def proxy_books():
 
 @app.route("/proxy/books/<int:id>/", methods=["GET"])
 def proxy_book_details(id):
-    backend_url = f"http://192.168.100.63:8000/library/books/{id}/"
+    backend_url = f"{BACKEND_BASE_URL}/library/books/{id}/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -65,7 +67,7 @@ def proxy_book_details(id):
 
 @app.route("/proxy/books/<int:id>/comments/", methods=["POST"])
 def proxy_book_comments(id):
-    backend_url = f"http://192.168.100.63:8000/library/books/{id}/comments/"
+    backend_url = f"{BACKEND_BASE_URL}/library/books/{id}/comments/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -83,7 +85,7 @@ def proxy_book_comments(id):
 
 @app.route("/proxy/comments/create/", methods=["POST"])
 def proxy_comments_create():
-    backend_url = "http://192.168.100.63:8000/library/comments/create/"
+    backend_url = f"{BACKEND_BASE_URL}/library/comments/create/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -101,7 +103,7 @@ def proxy_comments_create():
 
 @app.route("/proxy/likes/create/", methods=["POST"])
 def proxy_likes_create():
-    backend_url = "http://192.168.100.63:8000/library/likes/create/"
+    backend_url = f"{BACKEND_BASE_URL}/library/likes/create/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -119,7 +121,7 @@ def proxy_likes_create():
 
 @app.route("/proxy/books/<int:id>/likes/", methods=["POST"])
 def proxy_book_likes(id):
-    backend_url = "http://192.168.100.63:8000/library/likes/create/"
+    backend_url = f"{BACKEND_BASE_URL}/library/likes/create/"
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -131,7 +133,7 @@ def proxy_book_likes(id):
 
     try:
         data = request.get_json()
-        data = {"comment": id};
+        data = {"comment": id}
         response = requests.post(backend_url, json=data, headers=headers)
         response.raise_for_status()
         return response.json(), response.status_code

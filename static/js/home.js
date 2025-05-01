@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Fetch books list
     console.log("Fetching books list");
-    fetch("http://192.168.100.63:8000/library/books/", {
+    fetch("http://159.89.108.157:8000/library/books/", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,

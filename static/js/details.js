@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Rendering likes:", likes);
 
       // Handle URLs (relative or full)
-      const baseUrl = "http://192.168.100.63:8000";
+      const baseUrl = "http://159.89.108.157:8000";
       const pdfUrl = book.pdf
         ? book.pdf.startsWith("http")
           ? book.pdf

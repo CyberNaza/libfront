@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       try {
         const response = await fetch(
-          "http://192.168.100.63:8000/authonticate/verify-code/", // Updated endpoint
+          "http://159.89.108.157:8000/authonticate/verify-code/", // Updated endpoint
           {
             method: "POST",
             headers: {
